@@ -1,7 +1,7 @@
 # Customer Churn Analysis
 
 ## Project Overview
-This repository contains a customer churn analysis project built with Power BI / Microsoft Fabric. It includes a dataset of customer account details, a report file, and the underlying report definition and semantic model used by Power BI.
+This repository contains a customer churn analysis project built with Power BI. It includes a dataset of customer account details, a report file, and the underlying report definition and semantic model used by Power BI.
 
 ## Repository Contents
 - `Customer Data.csv` — the customer dataset used by the report
