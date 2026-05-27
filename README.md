@@ -1,98 +1,60 @@
-# Customer Churn Analysis Dashboard
+# Customer Churn Analysis
 
-## Overview
-An interactive Power BI / Microsoft Fabric report for analyzing customer churn patterns and retention metrics. This dashboard provides comprehensive visualizations to help understand customer behavior, identify at-risk segments, and develop retention strategies.
+## Project Overview
+This repository contains a customer churn analysis project built with Power BI / Microsoft Fabric. It includes a dataset of customer account details, a report file, and the underlying report definition and semantic model used by Power BI.
 
-## Features
-- **Key Performance Indicators (KPIs)**
-  - Total customer count
-  - Overall churn rate tracking
-  
-- **Interactive Visualizations**
-  - Donut charts showing customer distribution by:
-    - Gender
-    - Activity status
-    - Credit card status
-    - Products owned
-    - Country
-  - Gauge chart for churn rate performance against targets
-  - Combination column-line charts analyzing churn by:
-    - Age groups
-    - Account balance ranges
-    - Credit score brackets
+## Repository Contents
+- `Customer Data.csv` — the customer dataset used by the report
+- `Churn Analysis for customer data.pbip` — the packaged Power BI report file
+- `Churn Analysis for customer data.Report/` — extracted report definition files for the Power BI report
+- `Churn Analysis for customer data.SemanticModel/` — the semantic model containing tables and relationships used by the report
 
-- **Interactive Filtering**
-  - Dropdown slicer for filtering by churn status
-  - Cross-filtering across all visuals
+## Dataset Summary
+The primary dataset is `Customer Data.csv`, and it contains the following fields:
+- `customer_id`
+- `credit_score`
+- `country`
+- `gender`
+- `age`
+- `tenure`
+- `balance`
+- `products_number`
+- `credit_card`
+- `active_member`
+- `estimated_salary`
+- `churn`
 
-## Data Structure
-The report uses the following data entities:
-- **Customer Data** (primary table) - Core customer information including demographics, activity status, churn indicators
-- **Age Groups** - Customer segmentation by age brackets
-- **Acc Balance Groups** - Account balance categorization
-- **Credit Score Groups** - Credit score segmentation
+The dataset tracks customer demographics, account information, membership status, and whether each customer churned.
 
-## Key Metrics Visualized
-- Churn rate vs target performance
-- Customer count by various demographics
-- Country-wise customer distribution
-- Correlation between account factors (age, balance, credit score) and churn
+## Report Structure
+The Power BI report is built from the `Customer Data` table and includes supporting tables for segmentation such as:
+- Age groups
+- Account balance groups
+- Credit score groups
 
-## Technical Details
-- **Platform**: Microsoft Fabric / Power BI Report
-- **Schema Version**: 3.2.0 (report), 2.8.0 (visuals)
-- **Theme**: Tidal (custom) with CY26SU04 base theme
+The report files under `Churn Analysis for customer data.Report/definition/` include:
+- `report.json` — main report configuration
+- `pages.json` — page metadata
+- `version.json` — schema version
+- `diagramLayout.json` — visual layout
+- Visual configuration files under `pages/.../visuals/`
 
-## Setup Instructions
+The semantic model files under `Churn Analysis for customer data.SemanticModel/definition/` include the model definition and table metadata used by Power BI.
 
-### Prerequisites
-- Microsoft Fabric workspace access or Power BI Desktop
-- Proper data source connections configured
+## How to Open the Report
+1. Open `Churn Analysis for customer data.pbip` in Power BI Desktop.
+2. If using the extracted report files, open the report definition from the relevant Power BI project folder.
+3. Make sure the `Customer Data.csv` file is available as the data source if the report uses a file-based connection.
 
-### Opening the Report
-1. Clone this repository
-2. Open the `.pbir` report file in Power BI Desktop or publish to Fabric workspace
-3. Ensure data source connections are properly mapped
+## Key Analysis Goals
+The report is designed to help answer questions such as:
+- Which customer segments are most likely to churn?
+- How do churn rates vary by age, balance, and credit score?
+- What demographic or product attributes are related to customer retention?
 
-### Data Refresh
-- Configure scheduled refresh in Fabric/Power BI Service
-- Verify gateway connections if using on-premise data sources
+## Notes
+- The dataset is based on bank customer profile and churn status data.
+- The report can be updated by editing the `report.json` and semantic model definitions.
 
-## Dashboard Insights
-
-The dashboard answers key business questions:
-- Which customer segments have the highest churn rates?
-- How do churn rates vary by demographics?
-- What is the relationship between financial indicators and churn?
-- Are retention targets being met?
-
-## Customization
-To modify this report:
-1. Edit visual configurations in respective JSON files under `definition/`
-2. Update `report.json` for report-level settings
-3. Modify `themeCollection` settings for visual styling
-4. Adjust `diagramLayout.json` for canvas arrangement
-
-## Files Structure
-├── definition/
-│   ├── report.json (main report configuration)
-│   ├── pages.json (page metadata)
-│   ├── page.json (page-level settings)
-│   ├── version.json (schema version)
-│   ├── editorSettings.json (editor preferences)
-│   ├── diagramLayout.json (canvas layout)
-│   └── visual.json files (individual visual configs)
-├── CY26SU04.json (base theme)
-├── Tidal.json (custom theme)
-├── localSettings.json (local environment settings)
-└── README.md
-
-## Requirements
-- Microsoft Fabric / Power BI service access
-- Appropriate data permissions
-- Modern web browser for service viewing
-
-## Support
-For issues or questions, please refer to:
-- Microsoft Fabric documentation
-- Power BI community forums
+## License
+This repository contains sample analysis files and dataset contents for customer churn exploration.
