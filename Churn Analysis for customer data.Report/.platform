@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Churn Analysis for customer data"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "95d3408d-c2ea-4c16-8213-eb8497de627a"
+  }
+}

@@ -1,0 +1,44 @@
+table 'Credit Score Groups'
+	lineageTag: 18ed1165-f0fe-4e09-8126-7923d2f6d683
+
+	column 'Credit Score ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: a9297b95-fd44-46f4-984b-e59033fed67c
+		summarizeBy: none
+		sourceColumn: Credit Score ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Scores'
+		dataType: string
+		lineageTag: c3213f72-157a-4428-8995-b362bd7be6ea
+		summarizeBy: none
+		sourceColumn: Credit Scores
+		sortByColumn: 'Credit Score ID'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Credit Score Groups' = m
+		mode: import
+		source =
+				let
+				    Source = #"Customer Data",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Credit Scores"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Conditional Column" = Table.AddColumn(#"Removed Duplicates", "Custom", each if [Credit Scores] = "<=400" then 1 else if [Credit Scores] = "401-500" then 2 else if [Credit Scores] = "501-600" then 3 else if [Credit Scores] = "601-700" then 4 else if [Credit Scores] = "701-800" then 5 else if [Credit Scores] = ">=801" then 6 else null),
+				    #"Sorted Rows1" = Table.Sort(#"Added Conditional Column",{{"Custom", Order.Ascending}}),
+				    #"Reordered Columns1" = Table.ReorderColumns(#"Sorted Rows1",{"Custom", "Credit Scores"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Reordered Columns1",{{"Custom", Int64.Type}}),
+				    #"Sorted Rows" = Table.Sort(#"Changed Type",{{"Custom", Order.Ascending}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Sorted Rows",{{"Custom", "Credit Score ID"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"Credit Score ID", "Credit Scores"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

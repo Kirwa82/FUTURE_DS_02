@@ -1,0 +1,12 @@
+relationship AutoDetected_f52863d9-d0ee-4196-97d2-fb7500bc5368
+	fromColumn: 'Customer Data'.'Age Groups'
+	toColumn: 'Age Groups'.'Age Groups'
+
+relationship AutoDetected_937e2dc2-23d4-4800-8f95-2051d79d008c
+	fromColumn: 'Customer Data'.'Credit Scores'
+	toColumn: 'Credit Score Groups'.'Credit Scores'
+
+relationship AutoDetected_eee76c29-30a4-4535-9993-7c70fa444200
+	fromColumn: 'Customer Data'.'Acc Balance'
+	toColumn: 'Acc Balance Groups'.'Acc Balance'
+

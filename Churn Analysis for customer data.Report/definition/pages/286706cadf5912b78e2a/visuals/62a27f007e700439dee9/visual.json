@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "62a27f007e700439dee9",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 500,
+    "height": 196.846638694294,
+    "width": 1277.9889465998779,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Churn Analysis for customer Retention",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Arial Black",
+                      "fontSize": "20pt",
+                      "color": "#073562"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "center"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

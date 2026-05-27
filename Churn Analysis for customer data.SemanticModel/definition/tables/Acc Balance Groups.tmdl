@@ -1,0 +1,41 @@
+table 'Acc Balance Groups'
+	lineageTag: e70a31ce-a511-40d3-ae7e-1d970c32247b
+
+	column 'Acct Balance ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c2ad7fc-108b-4f2e-851a-16425cd632d9
+		summarizeBy: none
+		sourceColumn: Acct Balance ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Acc Balance'
+		dataType: string
+		lineageTag: b01763eb-0c68-42b9-8629-a083ee691672
+		summarizeBy: none
+		sourceColumn: Acc Balance
+		sortByColumn: 'Acct Balance ID'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Acc Balance Groups' = m
+		mode: import
+		source =
+				let
+				    Source = #"Customer Data",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Acc Balance"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Conditional Column" = Table.AddColumn(#"Removed Duplicates", "Acct Balance ID", each if [Acc Balance] = "0" then 1 else if [Acc Balance] = "1k-10k" then 2 else if [Acc Balance] = "10k-100k" then 3 else if [Acc Balance] = "100k-200k" then 4 else if [Acc Balance] = ">200k" then 5 else null),
+				    #"Sorted Rows" = Table.Sort(#"Added Conditional Column",{{"Acct Balance ID", Order.Ascending}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Sorted Rows",{"Acct Balance ID", "Acc Balance"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Reordered Columns",{{"Acct Balance ID", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,208 @@
+table 'Customer Data'
+	lineageTag: 48e53b4b-f178-4e3e-a43c-f4f9c2a7ad54
+
+	measure Customers = COUNT('Customer Data'[Customer ID])
+		formatString: 0
+		lineageTag: a7642941-8147-40ce-ae34-b2e6cdc31b35
+
+	measure 'Customer Lost' = CALCULATE(COUNT('Customer Data'[Churn Status]),'Customer Data'[Churn Status]="Churned")
+		formatString: 0
+		lineageTag: c7341bff-9860-4273-ac5c-72be0f7d571a
+
+	measure 'Churn Rate' = 'Customer Data'[Customer Lost]/ 'Customer Data'[Customers]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f2059e7d-fb04-46d3-baa0-06abca529bf6
+
+	column 'Customer ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: baa87adc-e898-457b-b46b-82c714ebb354
+		summarizeBy: count
+		sourceColumn: Customer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Score'
+		dataType: int64
+		formatString: 0
+		lineageTag: f8e3f559-2e1b-49ac-9f5b-9599730e4ffd
+		summarizeBy: sum
+		sourceColumn: Credit Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 5f3786e9-7a8a-4929-994d-0234e8840ed3
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 5522d526-f37d-4031-9845-6acd7bb03a63
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 3871e166-3bf1-4d57-a5e1-13f84a0b2794
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tenure
+		dataType: int64
+		formatString: 0
+		lineageTag: 926e269c-b15c-4208-a212-79ffe4332dde
+		summarizeBy: sum
+		sourceColumn: Tenure
+
+		annotation SummarizationSetBy = Automatic
+
+	column Balance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 296dd1d3-f6a3-44ae-935b-a1c1eabb9aba
+		summarizeBy: sum
+		sourceColumn: Balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'Credit Card Status'
+		dataType: string
+		lineageTag: b452f871-fa5f-445a-8772-53566d33e160
+		summarizeBy: none
+		sourceColumn: Credit Card Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Status'
+		dataType: string
+		lineageTag: 0009f436-7be8-4e84-93d0-3d4967f6f746
+		summarizeBy: none
+		sourceColumn: Activity Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Churn Status'
+		dataType: string
+		lineageTag: ff1d2be0-9bec-4c57-846a-54852b34a7d3
+		summarizeBy: none
+		sourceColumn: Churn Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Products
+		dataType: string
+		lineageTag: 58a5a9cf-ccee-47d9-94da-6bc0899cfa14
+		summarizeBy: none
+		sourceColumn: Products
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Groups'
+		dataType: string
+		lineageTag: 87d667e2-ad6d-4eff-8029-2f6636923ad9
+		summarizeBy: none
+		sourceColumn: Age Groups
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Scores'
+		dataType: string
+		lineageTag: d62245c9-ce38-4aec-bc7f-ab1fe0ecb1ff
+		summarizeBy: none
+		sourceColumn: Credit Scores
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Acc Balance'
+		dataType: string
+		lineageTag: 0b7002f8-f594-4ef9-b489-8161c6d750cb
+		summarizeBy: none
+		sourceColumn: Acc Balance
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Min Churn Rate'
+		dataType: double
+		lineageTag: f782ac32-6331-452c-919b-bf4c52da7d15
+		summarizeBy: sum
+		sourceColumn: Min Churn Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'max churn rate'
+		dataType: double
+		lineageTag: 0e24d1de-049d-445c-a851-e208cbc61e4d
+		summarizeBy: sum
+		sourceColumn: max churn rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Target
+		dataType: double
+		lineageTag: 5e243d17-8f75-4c5e-8117-a1a011d2021b
+		summarizeBy: sum
+		sourceColumn: Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Customer Data' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Future Interns\Task 2\Bank Customer Churn Prediction.csv"),[Delimiter=",", Columns=12, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", Int64.Type}, {"credit_score", Int64.Type}, {"country", type text}, {"gender", type text}, {"age", Int64.Type}, {"tenure", Int64.Type}, {"balance", type number}, {"products_number", Int64.Type}, {"credit_card", Int64.Type}, {"active_member", Int64.Type}, {"estimated_salary", type number}, {"churn", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"customer_id", "Customer ID"}, {"credit_score", "Credit Score"}, {"country", "Country"}, {"gender", "Gender"}, {"age", "Age"}, {"tenure", "Tenure"}, {"balance", "Balance"}, {"products_number", "Products"}, {"credit_card", "Credit Card"}, {"active_member", "Active Status"}, {"churn", "Churn"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"estimated_salary"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"Balance", Currency.Type}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type1",{{"Active Status", "Active"}, {"Churn", "Churn Status"}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Renamed Columns1", "Merged", each Text.Combine({"Prod ", Text.From([Products], "en-US")}), type text),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Inserted Merged Column",{"Products"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns1",{{"Merged", "Products"}, {"Credit Card", "Credit Card Status"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Credit Card Status", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type2","1","Owned",Replacer.ReplaceText,{"Credit Card Status"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","0","Not Owned",Replacer.ReplaceText,{"Credit Card Status"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Replaced Value1",{{"Active", "Activity Status"}}),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Renamed Columns3",{{"Activity Status", type text}}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Changed Type3","1","Active",Replacer.ReplaceText,{"Activity Status"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","0","Inactive",Replacer.ReplaceText,{"Activity Status"}),
+				    #"Changed Type4" = Table.TransformColumnTypes(#"Replaced Value3",{{"Churn Status", type text}}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Changed Type4","1","Churned",Replacer.ReplaceText,{"Churn Status"}),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","0","Not Churned",Replacer.ReplaceText,{"Churn Status"}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Replaced Value5", "Age Groups", each if [Age] <= 20 then "<=20" else if [Age] <= 30 then "21-30" else if [Age] <= 40 then "31-40" else if [Age] <= 50 then "41-50" else if [Age] <= 60 then 6 else null),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column",{"Age Groups"}),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Removed Columns2", "Age Groups", each if [Age] <= 20 then "<=20" else if [Age] <= 30 then "21-30" else if [Age] <= 40 then "31-40" else if [Age] <= 50 then "41-50" else if [Age] <= 60 then "51-60" else if [Age] <= 70 then "61-70" else if [Age] >= 71 then ">=71" else null),
+				    #"Added Conditional Column2" = Table.AddColumn(#"Added Conditional Column1", "Credit Scores", each if [Credit Score] <= 400 then "<=400" else if [Credit Score] <= 500 then "401-500" else if [Credit Score] <= 600 then "501-600" else if [Credit Score] <= 700 then "601-700" else if [Credit Score] <= 800 then "701-800" else if [Credit Score] >= 801 then ">=801" else null),
+				    #"Added Conditional Column3" = Table.AddColumn(#"Added Conditional Column2", "Acc Balance", each if [Balance] = 0 then 0 else if [Balance] <= 1000 then "1- 1k" else if [Balance] <= 10000 then "1k-10k" else if [Balance] <= 100000 then "10k-100k" else if [Balance] <= 200000 then "100k-200k" else if [Balance] > 200000 then ">200k" else null),
+				    #"Changed Type5" = Table.TransformColumnTypes(#"Added Conditional Column3",{{"Acc Balance", type text}, {"Credit Scores", type text}, {"Age Groups", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type5", "Min Churn Rate", each 0),
+				    #"Changed Type6" = Table.TransformColumnTypes(#"Added Custom",{{"Min Churn Rate", Percentage.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type6", "max churn rate", each 1),
+				    #"Changed Type7" = Table.TransformColumnTypes(#"Added Custom1",{{"max churn rate", Percentage.Type}}),
+				    #"Added Custom2" = Table.AddColumn(#"Changed Type7", "Target", each 0.15),
+				    #"Changed Type9" = Table.TransformColumnTypes(#"Added Custom2",{{"Target", Percentage.Type}}),
+				    #"Changed Type8" = Table.TransformColumnTypes(#"Changed Type9",{{"Target", Percentage.Type}})
+				in
+				    #"Changed Type8"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

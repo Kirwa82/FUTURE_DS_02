@@ -1,0 +1,74 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 459.14285714285711,
+            "y": 258.92857142857139
+          },
+          "nodeIndex": "Customer Data",
+          "nodeLineageTag": "48e53b4b-f178-4e3e-a43c-f4f9c2a7ad54",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 774.99999999999989,
+            "y": 0
+          },
+          "nodeIndex": "Acc Balance Groups",
+          "nodeLineageTag": "e70a31ce-a511-40d3-ae7e-1d970c32247b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 489.35714285714278,
+            "y": 0
+          },
+          "nodeIndex": "Age Groups",
+          "nodeLineageTag": "4fa12b57-3de6-4988-bd82-26378bc04bd9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 112.64285714285722,
+            "y": 0
+          },
+          "nodeIndex": "Credit Score Groups",
+          "nodeLineageTag": "18ed1165-f0fe-4e09-8126-7923d2f6d683",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 56.000000000000007,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
